@@ -1,0 +1,44 @@
+<h1 class="text-4xl font-bold text-gray-900 mb-6 text-center pt-3">Work Day</h1>
+
+<div data-controller="counter" class="min-h-screen bg-gray-100 flex flex-col items-center justify-center gap-8">
+
+  <div class="w-[300px] h-[130px] bg-white rounded-xl shadow-lg text-center flex items-center justify-center">
+   <input placeholder=" $ 00.00 " data-action="input->counter#profit input->counter#noEmptyInput" data-counter-target="salary" class="bg-gray-50 text-center border border-gray-300 text-3xl text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"></input>
+  </div>
+
+
+  <div class="flex items-center gap-16">
+    <div data-counter-target="earn" class="w-2/5 text-3xl bg-white rounded-xl shadow-lg p-16 text-center">
+      $00.00
+    </div>
+
+
+    <div class="w-2/3 bg-white rounded-xl shadow-lg p-8 text-center">
+      <button  data-action="counter#toggleStartStop" data-counter-target="startStop" type="button" class="focus:outline-none text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg px-4 py-2">
+        Start
+      </button>
+      <button  data-action="counter#finish" data-counter-target="finishBtn" type="button" class="focus:outline-none text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-lg px-4 py-2">
+       Finish
+      </button>
+    <div data-counter-target="stopwatch" class="mt-4 bg-gray-200 rounded-xl shadow-lg p-8 text-center text-4xl">
+        00:00:00
+      </div>
+    </div>
+
+
+    <div data-counter-target="hours" class="w-2/5 text-2xl bg-white rounded-xl shadow-lg p-16 text-center">
+      Hours completed
+    </div>
+
+
+  </div>
+<div>
+
+<%= form_with(model: @session) do |f|%>
+<%= f.hidden_field :profit%>
+<%= f.hidden_field :hours %>
+<%= f.submit "Save session", class: "bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+<% end%>
+
+  </div>
+</div>
