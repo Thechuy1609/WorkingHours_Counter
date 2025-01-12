@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-resources :counter
-
 resources :job
 resources :sessions
 
@@ -13,5 +11,5 @@ resources :sessions
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "counter#index"
+  root "sessions#index"
 end

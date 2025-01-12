@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="counter"
 export default class extends Controller {
-  static targets = ["salary","earn","hours","startStop","stopwatch","finishBtn"]
+  static targets = ["salary","earn","hours","startStop","stopwatch"]
 
 
   timer = null;
@@ -15,33 +15,17 @@ export default class extends Controller {
 
 connect() {
 console.log("We are connected")
-this.finishBtnTarget.disabled = true
   }
 
 
 toggleStartStop() {
 if (this.isRunning) {
       this.stop();
-} else if(!this.isRunning || this.startStopTarget.textContent == "Resume") {
-      this.start();
-      this.finishBtnTarget.disabled = false
-    }
- else if(this.isRunning &&  this.startStopTarget.textContent == "Stop"){
-      this.finish();
-    }
-  
-  }
-
-
-finish(){
-  clearInterval(this.timer);
-  this.startTime = 0;
-  this.elapsedTime = 0;
-  this.isRunning = false;
-  this.stopwatchTarget.textContent = "00:00:00";
-  this.startStopTarget.textContent = "Start"
-  this.salaryTarget.disabled = false
 }
+ else if(!this.isRunning || this.startStopTarget.textContent == "Resume") {
+      this.start();
+      }
+  }
 
 start() {
   const salaryValue = parseFloat(this.salaryTarget.value);
@@ -60,6 +44,7 @@ stop(){
     this.elapsedTime = Date.now() - this.startTime;
     this.isRunning = false
     this.startStopTarget.textContent = "Resume"
+    
   }
   
 update(){
@@ -70,14 +55,14 @@ update(){
     const minutes = String(Math.floor((this.elapsedTime / (1000 * 60)) % 60)).padStart(2, "0");
     const seconds = String(Math.floor((this.elapsedTime / 1000) % 60)).padStart(2, "0");
   
-    this.stopwatchTarget.textContent = `${hours}:${minutes}:${seconds}`;
+    this.stopwatchTarget.value = `${hours}:${minutes}:${seconds}`;
     this.profit();
     this.hoursDisplay()
   };  
 
   profit() {
     if (this.isRunning && (!isNaN(this.salaryTarget.value ))) {
-      this.salaryTarget.disabled = true
+      
       const hourlySalary = parseFloat(this.salaryTarget.value);
 
       const earningsPerSecond = hourlySalary / 3600;
@@ -93,7 +78,7 @@ update(){
       const cents = Math.round((this.actualProfit - dollars) * 100);
   
 
-      this.earnTarget.textContent = `$${dollars.toString().padStart(2, "0")}.${cents.toString().padStart(2, "0")}`;
+      this.earnTarget.value = `$${dollars.toString().padStart(2, "0")}.${cents.toString().padStart(2, "0")}`;
     }
 
   }
@@ -105,14 +90,7 @@ update(){
   
     const hours = String(Math.floor(this.elapsedTime / (1000 * 60 * 60)));
 
-    this.hoursTarget.textContent = `${hours === 1 ? 'hour' : 'hours'} completed`;
+    this.hoursTarget.value = `${hours === 1 ? 'Hour' : 'Hours'} completed`;
   }
 
-
-
-  noEmptyInput(){
-  if(this.salaryTarget.value === undefined){
-      this.salaryTarget.textContent = "00"
-  }
-}
 }

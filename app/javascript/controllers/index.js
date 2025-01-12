@@ -10,5 +10,3 @@ application.register("counter", CounterController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import ValueTransferController from "./value_transfer_controller"
-application.register("value-transfer", ValueTransferController)
