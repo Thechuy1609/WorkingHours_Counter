@@ -2,11 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="counter"
 export default class extends Controller {
-  static targets = ["salary","earn","hours","startStop","stopwatch"]
+  static targets = ["salary","earn","hours","startStop","stopwatch","save"]
 
 
   timer = null;
-  startTime = 0;
+  startTime = 0; 
   elapsedTime = 0;
   isRunning = false;
   actualProfit = 0
@@ -15,6 +15,8 @@ export default class extends Controller {
 
 connect() {
 console.log("We are connected")
+this.saveTarget.disabled = true
+this.salaryTarget.readOnly = false
   }
 
 
@@ -28,6 +30,7 @@ if (this.isRunning) {
   }
 
 start() {
+  this.salaryTarget.readOnly = true
   const salaryValue = parseFloat(this.salaryTarget.value);
   if (!isNaN(salaryValue)) {
     this.startTime = Date.now() - this.elapsedTime;
@@ -62,6 +65,7 @@ update(){
 
   profit() {
     if (this.isRunning && (!isNaN(this.salaryTarget.value ))) {
+
       
       const hourlySalary = parseFloat(this.salaryTarget.value);
 
@@ -93,4 +97,9 @@ update(){
     this.hoursTarget.value = `${hours === 1 ? 'Hour' : 'Hours'} completed`;
   }
 
+  avoidSaving(){
+    if(this.isRunning == true){
+      this.saveTarget.disabled = false
+    }
+  }
 }

@@ -1,5 +1,4 @@
 <h1 class="text-4xl font-bold text-gray-900 mb-6 text-center pt-3">Work Day</h1>
-
 <div data-controller="counter" class="min-h-screen bg-gray-100 flex flex-col items-center justify-center gap-8">
   <%= form_with(model: @session) do |f| %>
     <div class="flex flex-col items-center justify-self-center">
@@ -17,7 +16,7 @@
             class: "w-2/5 bg-white text-center border border-gray-300 text-3xl text-gray-900 rounded-lg block p-8 shadow-lg" %>
 
       <div class="w-2/3 bg-white rounded-xl shadow-lg p-8 text-center">
-        <button data-action="counter#toggleStartStop" 
+        <button data-action="counter#toggleStartStop counter#avoidSaving" 
                 data-counter-target="startStop" 
                 type="button" 
                 class="focus:outline-none text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg px-4 py-2">
@@ -25,7 +24,7 @@
         </button>
         <%= f.text_field :time, value:"00:00:00" ,
         readonly: true, 
-        data: { counter_target: "stopwatch" }, class: "mt-4 bg-gray-300 text-center border border-gray-300 text-4xl text-gray-900 rounded-lg block w-full p-8 shadow-lg" %>
+        data: {counter_target: "stopwatch" }, class: "mt-4 bg-gray-300 text-center border border-gray-300 text-4xl text-gray-900 rounded-lg block w-full p-8 shadow-lg" %>
       </div>
 
       <%= f.text_field :hours, value: "Hours completed" ,
@@ -35,7 +34,7 @@
     </div>
     
     <div class="flex justify-center mt-6">
-      <%= f.submit "Save session", class: "bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded-full" %>
+      <%= f.submit "Save session", data: {counter_target: "save"} , class: "bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded-full" %>
     </div>
   <% end %>
 </div>

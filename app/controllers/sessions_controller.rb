@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def create
     @session = Session.new(session_params)
     if @session.save
-      flash[:success] = 'Post successfully created'
+      flash[:success] = 'Session successfully saved'
       redirect_to root_path
     else
       flash[:error] = "Something went wrong", @session.errors.full_messages

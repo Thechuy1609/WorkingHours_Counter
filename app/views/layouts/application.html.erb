@@ -24,9 +24,11 @@
   </head>
 
   <body>
-    <% flash.each do |type, msg| %>
-  <div>
-    <%= msg %>
+    <% flash.each do |key, message| %>
+  <div
+    class="flash-message p-4 mb-4 border rounded shadow-sm bg-green-100 border-emerald-400 text-black-700 transition transform duration-500 ease-out"
+    data-controller="flash">
+    <p><%= message %></p>
   </div>
 <% end %>
     <%= yield %>
