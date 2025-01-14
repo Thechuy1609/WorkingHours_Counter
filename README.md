@@ -1,24 +1,17 @@
-# README
+# APP FOR TRACKING YOUR WORKING HOURS AND PROGRESS BY WEEK, MONTH AND YEAR
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+App build with Ruby on Rails,html,tailwind css,javascript and ruby
 
-Things you may want to cover:
 
-* Ruby version
+# Users can:
 
-* System dependencies
+* Track working hours
 
-* Configuration
+* Save sessions
 
-* Database creation
+* Keep track of their progress
 
-* Database initialization
+* Create an account for other functionalities
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Made by Alessandro Chuy
