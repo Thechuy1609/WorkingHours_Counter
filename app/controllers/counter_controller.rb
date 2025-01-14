@@ -1,10 +1,10 @@
 class CounterController < ApplicationController
 def new
-  @session = Session.new
+  @works = Work.new
 end
 
 def index
-  @session = Session.new
+  @works = Work.new
   
 end
 end

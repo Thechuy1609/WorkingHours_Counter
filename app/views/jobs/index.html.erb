@@ -10,20 +10,18 @@
       </tr>
     </thead>
     <tbody class="text-gray-700 text-center">
-      <tr>
-        <td class="py-2 px-4"><%= @session.created_at.strftime("%A") %></td>
-        <td class="py-2 px-4"><%= @session.salary %> per-hour</td>
-        <td class="py-2 px-4"><%= @session.profit %></td>
-        <td class="py-2 px-4"><%= @session.hours %></td>
-        <td class="py-2 px-4"><%= @session.time %></td>
-      </tr>
+      <% @works.each do |w| %>
+        <tr>
+          <td class="py-2 px-4"><%= w.created_at.strftime("%A") %></td>
+          <td class="py-2 px-4"><%= w.salary %> per-hour</td>
+          <td class="py-2 px-4"><%= w.profit %></td>
+          <td class="py-2 px-4"><%= w.hours %></td>
+          <td class="py-2 px-4"><%= w.time %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
-
-
-
-
 
 <div class="flex justify-center mt-6">
 <%= link_to "Main", root_path , class:"bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full" %>

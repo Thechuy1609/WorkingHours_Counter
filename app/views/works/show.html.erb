@@ -1,0 +1,30 @@
+<div class="max-w-4xl mx-auto mt-10">
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-800 text-white text-center">
+      <tr>
+        <th class="py-2 px-4">Day</th>
+        <th class="py-2 px-4">Salary</th>
+        <th class="py-2 px-4">Profit</th>
+        <th class="py-2 px-4">Hours</th>
+        <th class="py-2 px-4">Time</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-700 text-center">
+      <tr>
+        <td class="py-2 px-4"><%= @work.created_at.strftime("%A") %></td>
+        <td class="py-2 px-4"><%= @work.salary %> per-hour</td>
+        <td class="py-2 px-4"><%= @work.profit %></td>
+        <td class="py-2 px-4"><%= @work.hours %></td>
+        <td class="py-2 px-4"><%= @work.time %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+<div class="flex justify-center mt-6">
+<%= link_to "Main", root_path , class:"bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full" %>
+</div>

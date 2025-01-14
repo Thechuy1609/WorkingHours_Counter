@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-resources :job
-resources :sessions
+devise_for :users
+resources :jobs
+resources :works
 
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,5 +13,5 @@ resources :sessions
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "sessions#index"
+  root "works#index"
 end
