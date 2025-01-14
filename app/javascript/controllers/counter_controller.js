@@ -14,7 +14,6 @@ export default class extends Controller {
 
 
 connect() {
-console.log("We are connected")
 this.saveTarget.disabled = true
 this.salaryTarget.readOnly = false
   }
@@ -30,9 +29,9 @@ if (this.isRunning) {
   }
 
 start() {
-  this.salaryTarget.readOnly = true
   const salaryValue = parseFloat(this.salaryTarget.value);
   if (!isNaN(salaryValue)) {
+    this.salaryTarget.readOnly = true
     this.startTime = Date.now() - this.elapsedTime;
     this.isRunning = true;
     this.timer = setInterval(this.update.bind(this), 60);
@@ -57,8 +56,8 @@ update(){
     const hours = String(Math.floor(this.elapsedTime / (1000 * 60 * 60))).padStart(2, "0");
     const minutes = String(Math.floor((this.elapsedTime / (1000 * 60)) % 60)).padStart(2, "0");
     const seconds = String(Math.floor((this.elapsedTime / 1000) % 60)).padStart(2, "0");
-  
-    this.stopwatchTarget.value = `${hours}:${minutes}:${seconds}`;
+  //empty spaces for styling purposes below
+    this.stopwatchTarget.value = `  ${hours}:${minutes}:${seconds}`;
     this.profit();
     this.hoursDisplay()
   };  
@@ -94,12 +93,19 @@ update(){
   
     const hours = String(Math.floor(this.elapsedTime / (1000 * 60 * 60)));
 
-    this.hoursTarget.value = `${hours === 1 ? 'Hour' : 'Hours'} completed`;
+    this.hoursTarget.value = `${hours === 1 ? 'hour' : 'hours'} completed`;
   }
 
   avoidSaving(){
     if(this.isRunning == true){
       this.saveTarget.disabled = false
+    }
+  }
+
+  limitInputLength(event) {
+    const maxLength = 7;
+    if (event.target.value.length > maxLength) {
+      event.target.value = event.target.value.slice(0, maxLength);
     }
   }
 }
