@@ -7,7 +7,11 @@ class WorksController < ApplicationController
     end
     if @work.save
       flash[:success] = 'Session successfully saved'
+      if user_signed_in?
+      redirect_to jobs_path(current_user)
+      else
       redirect_to work_path(@work)
+      end
     else
       flash[:error] = "Something went wrong", @work.errors.full_messages
       redirect_to root_path
@@ -25,7 +29,7 @@ class WorksController < ApplicationController
   def destroy
     @work = Work.find(params[:id])
     @work.destroy
-      redirect_to root_path
+      redirect_to jobs_path(current_user)
   end
 
   private
