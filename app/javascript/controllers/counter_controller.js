@@ -93,7 +93,7 @@ update(){
   
     const hours = String(Math.floor(this.elapsedTime / (1000 * 60 * 60)));
 
-    this.hoursTarget.value = `${hours === 1 ? 'hour' : 'hours'} completed`;
+    this.hoursTarget.value = `${hours} ${hours === 1 ? 'hour' : 'hours'} completed`;
   }
 
   avoidSaving(){

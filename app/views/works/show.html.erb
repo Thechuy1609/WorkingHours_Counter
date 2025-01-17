@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto mt-10">
+<div data-controller="print" class="bg-gradient-to-b from-gray-400 to-gray-700 min-h-screen p-10">
   <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
     <thead class="bg-gray-800 text-white text-center">
       <tr>
@@ -7,6 +7,7 @@
         <th class="py-2 px-4">Profit</th>
         <th class="py-2 px-4">Hours</th>
         <th class="py-2 px-4">Time</th>
+         <th class="py-2 px-4">Actions</th>
       </tr>
     </thead>
     <tbody class="text-gray-700 text-center">
@@ -16,15 +17,18 @@
         <td class="py-2 px-4"><%= @work.profit %></td>
         <td class="py-2 px-4"><%= @work.hours %></td>
         <td class="py-2 px-4"><%= @work.time %></td>
+      <td class="py-3 px-4 flex items-center justify-center gap-3">
+              <%= link_to image_tag('printer2.png', alt: 'Print', width: '28', height: '28'), '#', 
+                data: { action: "print#printRow" }, 
+                class: "p-2 rounded-full hover:bg-gray-200 transition" %>
       </tr>
     </tbody>
   </table>
-</div>
-
-
-
-
-
 <div class="flex justify-center mt-6">
-<%= link_to "Main", root_path , class:"bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full" %>
+<%= link_to "Exit", root_path , class:"bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full" %>
 </div>
+</div>
+
+
+
+

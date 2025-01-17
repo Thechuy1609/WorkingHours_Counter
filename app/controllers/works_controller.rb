@@ -6,8 +6,8 @@ class WorksController < ApplicationController
       @work = Work.new(work_params)
     end
     if @work.save
-      flash[:success] = 'Session successfully saved'
       if user_signed_in?
+      flash[:success] = 'Session successfully saved'
       redirect_to jobs_path(current_user)
       else
       redirect_to work_path(@work)
