@@ -81,9 +81,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: working_counter_production
-    username: alessandrochuy
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: <%= ENV['DATABASE_URL'] %>
+  port: 5432
   cache:
     <<: *primary_production
     database: working_counter_production_cache
