@@ -6,10 +6,13 @@ class WorksController < ApplicationController
       @work = Work.new(work_params)
     end
     if @work.save
-      if user_signed_in?
-      flash[:success] = 'Session successfully saved'
+      if user_signed_in? && @work.project_id.nil?
+      flash[:success] = "Session successfully saved"
       redirect_to jobs_path(current_user)
-      else
+      elsif user_signed_in?
+        flash[:success] = "Session successfully saved on project"
+        redirect_to projects_path(current_user)
+      elsif user_signed_in? == false
       redirect_to work_path(@work)
       end
     else
@@ -29,11 +32,15 @@ class WorksController < ApplicationController
   def destroy
     @work = Work.find(params[:id])
     @work.destroy
+    if @work.project_id.nil?
       redirect_to jobs_path(current_user)
+    else
+      redirect_to projects_path(current_user)
+    end
   end
 
   private
  def work_params
-  params.require(:work).permit(:profit, :hours, :salary, :time)
+  params.require(:work).permit(:profit, :hours, :salary, :time, :project_id)
  end
 end

@@ -1,0 +1,33 @@
+<%= form_with model: @project, class: "max-w-4xl mx-auto bg-white p-8 shadow-lg rounded-xl border mt-20" do |f| %>
+  <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">New Project</h1>
+
+  <div class="space-y-6">
+    <div>
+      <%= f.label :name, "Project Name", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.text_field :name, 
+          class: "mt-1 w-full rounded-md border border-gray-400 px-4 py-2 text-gray-900 shadow-sm focus:border-green-500  focus:outline-none",
+          placeholder: "Enter project name" %>
+    </div>
+
+    <div>
+      <%= f.label :client, "Client", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.text_field :client, 
+          class: "mt-1 w-full rounded-md border border-gray-400 px-4 py-2 text-gray-900 shadow-sm focus:border-green-500  focus:outline-none",
+          placeholder: "Enter client name" %>
+    </div>
+
+    <div>
+      <%= f.label :description, "Description (optional)", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.text_area :description, 
+          class: "mt-1 w-full rounded-md border border-gray-400 px-4 py-2 text-gray-900 shadow-sm focus:border-green-500  focus:outline-none min-h-[8rem] resize-y",
+          placeholder: "Enter project description" %>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end space-x-4">
+    <%= f.submit "Create Project", 
+        class: "px-5 py-2.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition font-medium shadow" %>
+    <%= link_to "Cancel", projects_path, 
+        class: "px-5 py-2.5 border border-gray-400 text-gray-700 rounded-md hover:bg-gray-100 transition font-medium" %>
+  </div>
+<% end %>
