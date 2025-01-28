@@ -1,7 +1,7 @@
 # MyWorkingApp
 
 App build with Ruby on Rails,html,tailwind css,javascript and ruby.
-App for tracking your working hours and progress by week, month and year.
+App for tracking your working hours, make projects and save sessions.
 
 
 # Users can:
