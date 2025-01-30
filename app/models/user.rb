@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   has_many :works
   has_many :projects
+  has_many :invoices
 
 end

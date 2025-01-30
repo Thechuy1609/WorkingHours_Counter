@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 devise_for :users
 resources :jobs
-resources :works
+resources :works do
+  post 'add_commit', on: :member
+end
 resources :projects
 resources :project_works
+resources :invoices
 
 
 

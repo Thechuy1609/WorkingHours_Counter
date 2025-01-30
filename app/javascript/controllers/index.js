@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CommitsController from "./commits_controller"
+application.register("commits", CommitsController)
+
 import CounterController from "./counter_controller"
 application.register("counter", CounterController)
 

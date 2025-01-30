@@ -21,6 +21,10 @@ class WorksController < ApplicationController
     end
   end
 
+  def add_commit
+    @work = Work.find(params[:work_id])
+    @commit = @work.commits.create!(description: params[:description], timestamp: Time.current)
+  end
   def index
     @work = Work.new
   end
