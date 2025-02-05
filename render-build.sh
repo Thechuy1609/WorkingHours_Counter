@@ -5,6 +5,7 @@ set -o errexit
 bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
+npm install puppeteer
 apt-get update
 apt-get install -y chromium
 
