@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_project, except: [ :preview, :show, :index ]
+  before_action :set_project, except: [ :preview]
 
   def index
     if params[:project_id].present?
