@@ -23,7 +23,7 @@ export default class extends Controller {
     // Wait 30 seconds before refreshing
     setTimeout(() => {
       window.location.reload();
-    }, 10000); // 30000ms = 30 seconds
+    }, 8000); // 30000ms = 30 seconds
   }
 
   replaceAfterRefresh() {

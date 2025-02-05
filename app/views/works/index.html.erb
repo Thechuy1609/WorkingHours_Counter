@@ -24,70 +24,56 @@
       <% end %>
     </div>
   </div>
+
   <%= form_with(model: @work, class: "w-full max-w-4xl bg-white rounded-xl shadow-md p-8") do |f| %>
-  <%= link_to root_path do %>
-    <%= image_tag "reset.png", class: "w-12 h-12" %>
-  <% end %>
-
-  <div class="flex flex-col items-center mb-8">
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">Enter your hourly rate:</h3>
-    <%= f.text_field :salary, type: "number",
-           placeholder: "  $00.00",
-           data: { action: "input->counter#profit input->counter#limitInputLength", counter_target: "salary" },
-           class: "bg-white border border-gray-300 text-2xl text-gray-700 rounded-md focus:ring-emerald-500 focus:border-emerald-500 text-center p-3 w-2/3 max-w-sm" %>
-  </div>
-
-  <div class="grid grid-cols-3 gap-6 items-center">
-    <%= f.text_field :profit,
-         data: { counter_target: "earn" },
-         value: "$00.00",
-         readonly: true,
-         class: "bg-white border border-gray-300 text-center text-3xl text-gray-700 rounded-lg shadow-md p-6 w-full" %>
-
-    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center">
-      <button data-action="counter#toggleStartStop counter#avoidSaving"
-              data-counter-target="startStop"
-              type="button"
-              class="text-white bg-red-600 hover:bg-red-500 font-medium rounded-md px-6 py-3 mb-4">
-        Start
-      </button>
-      <%= f.text_field :time, value: "  00:00:00",
-         readonly: true,
-         data: { counter_target: "stopwatch" },
-         class: "bg-gray-100 border border-gray-300 text-4xl text-gray-800 rounded-lg block w-full p-4 shadow-md" %>
-    </div>
-    <%= f.text_field :hours,
-         value: "0 hours completed",
-         data: { counter_target: "hours" },
-         readonly: true,
-         class: "bg-white border border-gray-300 text-center text-2xl text-gray-700 rounded-lg shadow-md p-6 w-full" %>
-  </div>
-
-<%#=commits side%>
-<div id="commit-list" data-counter-target="commitList" class="flex flex-col items-center mb-8 space-y-6 pt-5 ">
-    <%= f.fields_for :commits do |commit_fields| %>
-  <div id="commit-entry" class="commit-entry bg-gray-50 p-6 rounded-lg shadow-md mb-4 flex items-center">
-    <%= commit_fields.text_area :description,
-    placeholder: "Describe your commit...", 
-    class: "bg-white border text-ls text-gray-700 rounded-md p-3 w-2/3 max-w-sm commit-text", 
-    data: { action: "input->counter#limitInputLength", counter_target: "commitDescription" },
-    style: "resize: none; overflow: hidden;" %>
-        <button type="button" data-action="counter#commit" class="commit-btn bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md ml-4 shadow-md transition-all duration-200">Commit</button>
-      </div>
+    <%= link_to root_path do %>
+      <%= image_tag "reset.png", class: "w-12 h-12" %>
     <% end %>
-    <button type="button" data-action="counter#addCommit" class="mt-6 bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-full shadow-lg transition-all duration-200">Add Commit</button>
-</div>
 
+    <div class="flex flex-col items-center mb-8">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Enter your hourly rate:</h3>
+      <%= f.text_field :salary, type: "number",
+             placeholder: "  $00.00",
+             data: { action: "input->counter#profit input->counter#limitInputLength", counter_target: "salary" },
+             class: "bg-white border border-gray-300 text-2xl text-gray-700 rounded-md focus:ring-emerald-500 focus:border-emerald-500 text-center p-3 w-2/3 max-w-sm" %>
+    </div>
 
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <%= f.text_field :profit,
+           data: { counter_target: "earn" },
+           value: "$00.00",
+           readonly: true,
+           class: "bg-white border border-gray-300 text-center text-3xl text-gray-700 rounded-lg shadow-md p-6 w-full" %>
 
-  <div class="flex justify-center mt-8">
-    <%= f.submit "Save session",
-         data: { counter_target: "save" },
-         class: "bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-3 px-6 rounded-full shadow-md" %>
-  </div>
+      <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center">
+        <button data-action="counter#toggleStartStop counter#avoidSaving"
+                data-counter-target="startStop"
+                type="button"
+                class="text-white bg-red-600 hover:bg-red-500 font-medium rounded-md px-6 py-3 mb-4">
+          Start
+        </button>
+        <%= f.text_field :time, value: "  00:00:00",
+           readonly: true,
+           data: { counter_target: "stopwatch" },
+           class: "bg-gray-100 border border-gray-300 text-4xl text-gray-800 rounded-lg block w-full p-4 shadow-md" %>
+      </div>
+      <%= f.text_field :hours,
+           value: "0 hours completed",
+           data: { counter_target: "hours" },
+           readonly: true,
+           class: "bg-white border border-gray-300 text-center text-2xl text-gray-700 rounded-lg shadow-md p-6 w-full" %>
+    </div>
+
+    <div class="flex justify-center mt-8">
+      <%= f.submit "Save session",
+           data: { counter_target: "save" },
+           class: "bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-3 px-6 rounded-full shadow-md" %>
+    </div>
+  <% end %>
 
   <% if user_signed_in? %>
-    <%= link_to "Projects", projects_path, class: "bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
-  <% end %>
+    <div class="flex justify-center mt-10">
+      <%= link_to "Projects", projects_path, class: "bg-green-600 hover:bg-green-700 text-white font-bold text-2xl py-4 px-8 rounded-full shadow-lg" %>
+    </div>
   <% end %>
 </div>

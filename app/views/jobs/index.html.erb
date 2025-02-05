@@ -12,7 +12,6 @@
           <th class="py-3 px-4">Profit</th>
           <th class="py-3 px-4">Hours</th>
           <th class="py-3 px-4">Time</th>
-           <th class="py-3 px-4">Commits</th>
           <th class="py-3 px-4">Actions</th>
         </tr>
       </thead>
@@ -24,7 +23,6 @@
             <td class="py-3 px-4 font-semibold text-green-600"><%= w.profit %></td>
             <td class="py-3 px-4"><%= w.hours %></td>
             <td class="py-3 px-4"><%= w.time %></td>
-              <td class="py-3 px-4"><%= w.commits.count%>
             <td class="py-3 px-4 flex items-center justify-center gap-3">
               <%= link_to image_tag('printer2.png', alt: 'Print', width: '28', height: '28'), '#', 
                 data: { action: "print#printRow" }, 
