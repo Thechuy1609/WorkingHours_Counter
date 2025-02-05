@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_30_221913) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_04_193551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,7 +29,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_221913) do
     t.string "name"
     t.string "client"
     t.bigint "project_id"
+    t.string "line_items"
+    t.string "total"
+    t.date "date"
+    t.date "due_date"
     t.index ["project_id"], name: "index_invoices_on_project_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.string "description"
+    t.integer "hours"
+    t.string "rate"
+    t.bigint "invoice_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "quantity"
+    t.string "subtotal"
+    t.index ["invoice_id"], name: "index_line_items_on_invoice_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -71,6 +87,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_221913) do
 
   add_foreign_key "commits", "works"
   add_foreign_key "invoices", "projects"
+  add_foreign_key "line_items", "invoices"
   add_foreign_key "projects", "users"
   add_foreign_key "works", "invoices"
   add_foreign_key "works", "projects"

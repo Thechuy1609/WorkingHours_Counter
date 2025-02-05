@@ -7,5 +7,5 @@ class Work < ApplicationRecord
   belongs_to :project, optional: true
   belongs_to :invoice, optional: true
   has_many :commits, dependent: :destroy
-  accepts_nested_attributes_for :commits
+  accepts_nested_attributes_for :commits, allow_destroy: true
 end

@@ -4,9 +4,6 @@
 
 import { application } from "./application"
 
-import CommitsController from "./commits_controller"
-application.register("commits", CommitsController)
-
 import CounterController from "./counter_controller"
 application.register("counter", CounterController)
 
@@ -15,6 +12,12 @@ application.register("flash", FlashController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import HideButtonsController from "./hide_buttons_controller"
+application.register("hide-buttons", HideButtonsController)
+
+import InvoiceController from "./invoice_controller"
+application.register("invoice", InvoiceController)
 
 import PrintController from "./print_controller"
 application.register("print", PrintController)

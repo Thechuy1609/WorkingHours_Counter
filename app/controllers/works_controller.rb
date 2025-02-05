@@ -21,10 +21,6 @@ class WorksController < ApplicationController
     end
   end
 
-  def add_commit
-    @work = Work.find(params[:work_id])
-    @commit = @work.commits.create!(description: params[:description], timestamp: Time.current)
-  end
   def index
     @work = Work.new
   end
@@ -44,7 +40,7 @@ class WorksController < ApplicationController
   end
 
   private
- def work_params
-  params.require(:work).permit(:profit, :hours, :salary, :time, :project_id)
- end
+  def work_params
+    params.require(:work).permit(:salary, :profit, :time, :hours,:project_id, commits_attributes: [:description])
+  end
 end

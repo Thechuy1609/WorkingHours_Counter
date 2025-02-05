@@ -1,0 +1,76 @@
+<div class="flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-4xl h-[1000px] bg-white p-8 shadow-lg rounded-lg space-y-10 overflow-none">
+    <div class="invoice-header">
+      <h1 class="text-3xl font-bold text-gray-900">INVOICE</h1>
+    </div>
+
+    <div class="customer-details grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-lm font-medium text-gray-700">From</label>
+        <p class="mt-2 block w-full text-lm text-gray-700"><%= @invoice.name %></p>
+      </div>
+      <div>
+        <label class="block text-lm font-medium text-gray-700">Bill To</label>
+        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.client %></p>
+      </div>
+    </div>
+
+    <div class="invoice-meta grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-lm font-medium text-gray-700">Date</label>
+        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.date.strftime("%B %d, %Y") %></p>
+      </div>
+      <div>
+        <label class="block text-lm font-medium text-gray-700">Due Date</label>
+        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.due_date.strftime("%B %d, %Y") %></p>
+      </div>
+    </div>
+
+    <table class="w-full border-collapse border border-gray-200 rounded-lg shadow-sm">
+      <thead class="bg-gray-300">
+        <tr>
+          <th class="p-2 border border-gray-300">Description</th>
+          <th class="p-2 border border-gray-300">Quantity / Hours</th>
+          <th class="p-2 border border-gray-300">Rate</th>
+          <th class="p-2 border border-gray-300">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% @invoice.line_items.each do |line_item| %>
+          <tr>
+            <td class="p-2 border border-gray-300">
+              <p class="text-lm text-gray-700"><%= line_item.description %></p>
+            </td>
+            <td class="p-2 border border-gray-300 text-center">
+              <p class="text-lm text-gray-700"><%= line_item.quantity %></p>
+            </td>
+            <td class="p-2 border border-gray-300 text-center">
+              <p class="text-lm text-gray-700"><%= line_item.rate %></p>
+            </td>
+            <td class="p-2 border border-gray-300 text-center">
+              <p class="text-lm text-gray-700"><%=number_to_currency(line_item.subtotal) %></p>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <div class="mt-auto">
+    <div class="flex justify-end mt-8">
+      <div class="text-right">
+        <p class="text-xl font-semibold text-gray-700 bg-gray-50 shadow-sm px-6 py-3 rounded-md">
+          <%=(@invoice.total) %>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+<div class="mt-6 text-right flex justify-start p-12" data-controller="hide-buttons">
+  <%= link_to 'Download', preview_invoice_path(@invoice), 
+        class: "px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700",
+        data: { action: "click->hide-buttons#refreshLater", hide_buttons_target: "button" } %>
+</div>
+
+
+  </div>
+  </div>

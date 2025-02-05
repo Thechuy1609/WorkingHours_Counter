@@ -53,6 +53,20 @@
         Start Session
       </button>
 
+<%#=commits side%>
+<div id="commit-list" data-counter-target="commitList" class="flex flex-col items-center mb-8 space-y-6 pt-5 ">
+    <%= f.fields_for :commits do |commit_fields| %>
+  <div id="commit-entry" class="commit-entry bg-gray-50 p-6 rounded-lg shadow-md mb-4 flex items-center">
+    <%= commit_fields.text_area :description,
+    placeholder: "Describe your commit...", 
+    class: "bg-white border text-ls text-gray-700 rounded-md p-3 w-2/3 max-w-sm commit-text", 
+    data: { action: "input->counter#limitInputLength", counter_target: "commitDescription" },
+    style: "resize: none; overflow: hidden;" %>
+        <button type="button" data-action="counter#commit" class="commit-btn bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md ml-4 shadow-md transition-all duration-200">Commit</button>
+      </div>
+    <% end %>
+    <button type="button" data-action="counter#addCommit" class="mt-6 bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-full shadow-lg transition-all duration-200">Add Commit</button>
+</div>
       <%= f.submit "Save Session",
            data: { counter_target: "save" },
            class: "w-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-md" %>
@@ -62,5 +76,6 @@
       class: "w-3/4 text-center bg-blue-950 hover:bg-blue-900 text-white font-medium py-2 px-4 rounded-lg shadow-md transition transform hover:scale-105",
       onclick: "return confirm('Are you sure you want to go back?. Your data session will be lost.');" %>
 </div>
+
   </div>
 </div>

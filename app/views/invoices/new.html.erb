@@ -1,14 +1,92 @@
-<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="mt-6 text-center text-5xl font-bold tracking-tight text-gray-900">Generated Invoice</h2>
-  </div>
+<div data-controller="invoice" class="flex flex-col min-h-screen items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">Generated Invoice</h2>
+  <%= form_with(model: @invoice, url: invoices_path(project_id: @project.id)) do |f| %>
+    <%= f.hidden_field :project_id, value: @project.id %>
+    <div class="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg space-y-10">
+      <div class="invoice-header">
+        <h1 class="text-3xl font-bold text-gray-900">INVOICE</h1>
+      </div>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-    <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-      <div>
-        <div class="relative mt-10">
-          <div class="absolute inset-0 flex items-center" aria-hidden="true">
-            <div class="w-full border-t border-gray-200"></div>
-          </div>
+      <div class="customer-details grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-lm font-medium text-gray-700">From</label>
+          <%= f.text_field :name, placeholder: "Your name", class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm" %>
+        </div>
+        <div>
+          <label class="block text-lm font-medium text-gray-700">Bill To</label>
+          <%= f.text_field :client, value: @project.client, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm" %>
         </div>
       </div>
+
+      <div class="invoice-meta grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-lm font-medium text-gray-700">Date</label>
+          <%= f.date_field :date, value: Date.today, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm" %>
+        </div>
+        <div>
+          <label class="block text-lm font-medium text-gray-700">Due Date</label>
+          <%= f.date_field :due_date, value: (Date.today + 7), class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm" %>
+        </div>
+      </div>
+
+      <table class="w-full border-collapse border border-gray-200 rounded-lg shadow-sm">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 border border-gray-300">Description</th>
+            <th class="p-2 border border-gray-300">Quantity / Hours</th>
+            <th class="p-2 border border-gray-300">Rate</th>
+            <th class="p-2 border border-gray-300">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody data-invoice-target="lineItems" class="divide-y divide-gray-200">
+          <%= f.fields_for :line_items do |line_item_fields| %>
+            <tr>
+              <td class="p-2 border border-gray-300">
+                <%= line_item_fields.text_area :description, class: "w-full h-12 rounded-md border-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm resize-none overflow-hidden" %>
+              </td>
+              <td class="p-2 border border-gray-300">
+                <%= line_item_fields.number_field :quantity, min: 0, class: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center" %>
+              </td>
+              <td class="p-2 border border-gray-300">
+                <%= line_item_fields.number_field :rate, class: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center" %>
+              </td>
+             <td class="p-2 border border-gray-300 text-center">
+                <%= line_item_fields.text_field :subtotal, value:"$00.00",readonly: true, class: "w-20 text-center bg-gray-100 border-gray-300 rounded-md shadow-sm text-gray-700" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <button type="button" data-action="click->invoice#addLineItem" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded-md shadow-md hover:bg-gray-900">
+        + Line Item
+      </button>
+
+      <div class="mt-6 flex justify-end">
+        <div class="flex items-center space-x-2 text-center">
+          <%= f.text_field :total, data: { invoice_target: "total" }, value: "Total $00.00", readonly: true, class: "w-84 text-center bg-gray-50 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg font-semibold" %>
+        </div>
+      </div>
+      <%= f.submit 'Save', class: "px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700" %>
+    </div>
+  <% end %>
+
+  <div class="flex justify-center mt-8">
+    <%= link_to "Back", project_path(@project), class: "bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
+  </div>
+
+  <div class="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg space-y-10 mt-8">
+    <div class="invoice-header">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Commit History</h1>
+    </div>
+
+    <div class="commit-container bg-gray-50 p-4 rounded-lg shadow-sm max-h-96 overflow-y-auto">
+  <% @commits.each do |l| %>
+    <div class="commit-item border-b border-gray-200 py-2">
+      <p class="text-gray-700 text-lg"><%= l.description %></p>
+      <p class="text-gray-500 text-sm">
+        <%= l.created_at.strftime('%H:%M  %d  %B') %>  <!-- Format time and date -->
+      </p>
+    </div>
+  <% end %>
+</div>

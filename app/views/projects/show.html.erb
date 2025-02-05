@@ -3,6 +3,7 @@
     <h2 class="text-3xl font-semibold"><%=@project.name%> Sessions</h2>
   </div>
 
+  <% unless @works.all.length == 0 %>
   <div class="max-w-6xl mx-auto mt-10">
     <table class="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
       <thead class="bg-gray-900 text-white text-center">
@@ -12,6 +13,7 @@
           <th class="py-3 px-4">Profit</th>
           <th class="py-3 px-4">Hours</th>
           <th class="py-3 px-4">Time</th>
+          <th class="py-3 px-4">Commits</th>
           <th class="py-3 px-4">Actions</th>
         </tr>
       </thead>
@@ -23,6 +25,7 @@
             <td class="py-3 px-4 font-semibold text-green-600"><%= w.profit %></td>
             <td class="py-3 px-4"><%= w.hours %></td>
             <td class="py-3 px-4"><%= w.time %></td>
+              <td class="py-3 px-4"><%= w.commits.count%>
             <td class="py-3 px-4 flex items-center justify-center gap-3">
               <%= link_to image_tag('printer2.png', alt: 'Print', width: '28', height: '28'), '#', 
                 data: { action: "print#printRow" }, 
@@ -37,11 +40,15 @@
         <% end %>
       </tbody>
     </table>
+      <% end %>
 <div class="flex justify-center mt-8">
    <%= link_to "New Session", new_project_work_path(project_id: @project.id), class: "bg-green-600 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
   </div>
   <div class="flex justify-center mt-8">
    <%= link_to "New Invoice", new_invoice_path(project_id: @project.id), class: "bg-blue-600 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
+  </div>
+  <div class="flex justify-center mt-8">
+   <%= link_to "Invoices", invoices_path(project_id: @project.id), class: "bg-purple-600 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
   </div>
   <div class="flex justify-center mt-8">
     <%= link_to "Back", projects_path, class: "bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>

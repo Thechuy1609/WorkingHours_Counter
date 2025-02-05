@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
 devise_for :users
 resources :jobs
-resources :works do
-  post 'add_commit', on: :member
-end
+resources :works
 resources :projects
 resources :project_works
-resources :invoices
-
+resources :invoices do
+  member do
+    get 'preview'
+  end
+end
+resources :commits
 
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
