@@ -39,7 +39,7 @@
         <% @invoice.line_items.each do |line_item| %>
           <tr>
             <td class="p-2 border border-gray-300">
-              <p class="text-lm text-gray-700"><%= line_item.description %></p>
+              <p class="text-lm text-gray-700"><%= simple_format line_item.description %></p>
             </td>
             <td class="p-2 border border-gray-300 text-center">
               <p class="text-lm text-gray-700"><%= line_item.quantity %></p>

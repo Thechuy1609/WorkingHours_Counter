@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_project, except: [ :preview]
+  before_action :set_project # , except: [ :preview ]
 
   def index
     if params[:project_id].present?
@@ -18,6 +18,7 @@ class InvoicesController < ApplicationController
   def create
     Rails.logger.debug "Params received: #{params.inspect}"
     @invoice = Invoice.new(invoice_params)
+
     if @invoice.save
       flash[:success] = "Invoice successfully created"
       redirect_to invoice_path(@invoice)
@@ -29,8 +30,14 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Invoice.new
+
     @works = @project.works.includes(:commits)  # Eager load commits for each work
     @commits = @works.flat_map(&:commits)       # Flatten the array of commits
+
+    description = @commits.map(&:description).join("\n")
+
+    generated_line_item = @invoice.line_items.new description: description, rate: @works.first.salary.to_d, quantity: @works.first.calculated_time, subtotal: (@works.first.calculated_time * @works.first.salary.to_d).round(2)
+    @invoice.total = generated_line_item.subtotal
   end
 
   def show
@@ -52,9 +59,9 @@ class InvoicesController < ApplicationController
       scale: 1.1,
       print_background: true,
       emulate_media: "print",
-      wait_until: 'domcontentloaded',
+      wait_until: "domcontentloaded",
       cache: false,
-      page_ranges: '1'
+      page_ranges: "1"
     )
     pdf = grover.to_pdf
     send_data pdf, filename: "invoice.pdf", type: "application/pdf", disposition: "attachment"
