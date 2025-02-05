@@ -1,6 +1,7 @@
 Grover.configure do |config|
   config.options = {
-    executable_path: '/usr/bin/google-chrome-stable',
+    executable_path: '/usr/bin/chromium',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     format: 'A4',
     margin: '0', 
     print_background: true,
