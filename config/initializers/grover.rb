@@ -1,6 +1,6 @@
 Grover.configure do |config|
   config.options = {
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executable_path: Puppeteer.launch(options: { headless: true }).executable_path,
     format: "A4",
     margin: "0",
     print_background: true,
