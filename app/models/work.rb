@@ -13,7 +13,7 @@ class Work < ApplicationRecord
     hours, minutes, seconds = time.strip.split(":").map(&:to_i)
     minutes_to_seconds = minutes * 60
     hours_to_seconds = hours * 60 * 60
-    total_seconds = minutes_to_seconds + hours_to_seconds + seconds
+    total_seconds = minutes_to_seconds + hours_to_seconds
     (total_seconds / 1.hour.to_f).round(2)
   end
 end

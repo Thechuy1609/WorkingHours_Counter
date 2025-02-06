@@ -40,6 +40,9 @@
         <% end %>
       </tbody>
     </table>
+       <p class="text-xs text-gray-100 font-medium italic text-right mt-1 mr-2">
+  (Invoices will use the last work session saved)
+</p>
       <% end %>
 <div class="flex justify-center mt-8">
    <%= link_to "New Session", new_project_work_path(project_id: @project.id), class: "bg-green-600 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>

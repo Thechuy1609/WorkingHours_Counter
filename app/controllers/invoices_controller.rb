@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_project # , except: [ :preview ]
+  before_action :set_project, except: [:preview]
 
   def index
     if params[:project_id].present?
@@ -31,21 +31,25 @@ class InvoicesController < ApplicationController
   def new
     @invoice = Invoice.new
 
-    @works = @project.works.includes(:commits)  # Eager load commits for each work
-    @commits = @works.flat_map(&:commits)       # Flatten the array of commits
+    @works = @project.works.includes(:commits)
+    @commits = @works.flat_map(&:commits)
 
-    description = @commits.map(&:description).join("\n")
+    if @works.present?
+      description = @commits.map(&:description).join("\n")
 
-    generated_line_item = @invoice.line_items.new description: description, rate: @works.first.salary.to_d, quantity: @works.first.calculated_time, subtotal: (@works.first.calculated_time * @works.first.salary.to_d).round(2)
-    @invoice.total = generated_line_item.subtotal
+      generated_line_item = @invoice.line_items.new description: description, rate: @works.last.salary.to_d, quantity: @works.last.calculated_time, subtotal: (@works.last.calculated_time * @works.last.salary.to_d).round(2)
+      @invoice.total = generated_line_item.subtotal
+    end
   end
 
   def show
     @invoice = Invoice.find(params[:id])
+    @project = Project.find_by(:id == @invoice.project_id)
   end
 
   def preview
     @invoice = Invoice.find(params[:id])
+    @project = Project.find_by(:id == @invoice.project_id)
     html_content = render_to_string(template: "invoices/show")
     grover = Grover.new(
       html_content,
@@ -86,6 +90,6 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:name, :client, :total, :project_id, :date, :due_date, line_items_attributes: [ :description, :quantity, :rate, :subtotal ])
+    params.require(:invoice).permit(:name, :client, :total, :project_id, :date, :due_date,line_items_attributes: [ :description, :quantity, :rate, :subtotal ])
   end
 end

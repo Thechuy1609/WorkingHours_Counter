@@ -2,6 +2,8 @@
   <div class="w-full max-w-4xl h-[1000px] bg-white p-8 shadow-lg rounded-lg space-y-10 overflow-none">
     <div class="invoice-header">
       <h1 class="text-3xl font-bold text-gray-900">INVOICE</h1>
+     <div class="m-2"> <%= @project.name %></h1> </div>
+
     </div>
 
     <div class="customer-details grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -42,10 +44,10 @@
               <p class="text-lm text-gray-700"><%= simple_format line_item.description %></p>
             </td>
             <td class="p-2 border border-gray-300 text-center">
-              <p class="text-lm text-gray-700"><%= line_item.quantity %></p>
+              <p class="text-lm text-gray-700"><%= line_item.quantity.to_d.round%></p>
             </td>
             <td class="p-2 border border-gray-300 text-center">
-              <p class="text-lm text-gray-700"><%= line_item.rate %></p>
+              <p class="text-lm text-gray-700"><%= line_item.rate.to_d %></p>
             </td>
             <td class="p-2 border border-gray-300 text-center">
               <p class="text-lm text-gray-700"><%=number_to_currency(line_item.subtotal) %></p>
@@ -59,7 +61,7 @@
     <div class="flex justify-end mt-8">
       <div class="text-right">
         <p class="text-xl font-semibold text-gray-700 bg-gray-50 shadow-sm px-6 py-3 rounded-md">
-          <%=(@invoice.total) %>
+         Total:  <%= number_to_currency(@invoice.total.to_s.slice(7..)) %>
         </p>
       </div>
     </div>
@@ -68,7 +70,7 @@
 <div class="mt-6 text-right flex justify-start p-12" data-controller="hide-buttons">
   <%= link_to 'Download', preview_invoice_path(@invoice), 
         class: "px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700",
-        data: { action: "click->hide-buttons#refreshLater", hide_buttons_target: "button" } %>
+        data: { action: "click->hide-buttons#replaceAfterClick", hide_buttons_target: "button" } %>
 </div>
 
 

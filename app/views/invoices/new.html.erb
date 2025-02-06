@@ -45,13 +45,13 @@
                 <%= line_item_fields.text_area :description, class: "w-full h-12 rounded-md border-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm resize-none overflow-hidden field-sizing-content", oninput: 'this.style.height = "";this.style.height = this.scrollHeight + "px"' %>
               </td>
               <td class="p-2 border border-gray-300">
-                <%= line_item_fields.text_field :quantity, class: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center" %>
+                <%= line_item_fields.number_field :quantity,class: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center" %>
               </td>
               <td class="p-2 border border-gray-300">
                 <%= line_item_fields.number_field :rate, class: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center" %>
               </td>
              <td class="p-2 border border-gray-300 text-center">
-                <%= line_item_fields.text_field :subtotal, value: line_item_fields.object.subtotal.present? ? "$#{line_item_fields.object.subtotal}" : "$0.00",readonly: true, class: "w-20 text-center bg-gray-100 border-gray-300 rounded-md shadow-sm text-gray-700 " %>
+                <%= line_item_fields.text_field :subtotal , value:"0.00", readonly: true, class: "w-20 text-center" %>
               </td>
             </tr>
           <% end %>
@@ -64,7 +64,7 @@
 
       <div class="mt-6 flex justify-end">
         <div class="flex items-center space-x-2 text-center">
-          <%= f.text_field :total, data: { invoice_target: "total" }, value:  f.object.total.present? ? "Total $#{f.object.total}" : "Total $0.00", readonly: true, class: "w-84 text-center bg-gray-50 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg font-semibold" %>
+          <%= f.text_field :total,  name: "invoice[total]", data: { invoice_target: "total" }, value:"Total $00.00", readonly: true, class: "w-84 text-center bg-gray-50 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg font-semibold" %>
         </div>
       </div>
       <%= f.submit 'Save', class: "px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700" %>
