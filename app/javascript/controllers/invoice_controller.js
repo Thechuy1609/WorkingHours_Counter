@@ -50,7 +50,7 @@ export default class extends Controller {
 
     newRow.innerHTML = `
       <td class="p-2 border border-gray-300">
-        <textarea name="invoice[line_items_attributes][${index}][description]" data-invoice-target="textarea" class="w-full h-12 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm resize-none overflow-hidden"></textarea>
+        <textarea name="invoice[line_items_attributes][${index}][description]" data-invoice-target="textarea" class="w-full h-12 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm resize-none" oninput= 'this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
       </td>
       <td class="p-2 border border-gray-300">
         <input type="number" value="0.0" name="invoice[line_items_attributes][${index}][quantity]" min="0" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lm text-center">

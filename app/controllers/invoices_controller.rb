@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_project, except: [:preview]
+  before_action :set_project
 
   def index
     if params[:project_id].present?
@@ -44,32 +44,9 @@ class InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
-    @project = Project.find_by(:id == @invoice.project_id)
+    @project = @invoice.project
   end
 
-  def preview
-    @invoice = Invoice.find(params[:id])
-    @project = Project.find_by(:id == @invoice.project_id)
-    html_content = render_to_string(template: "invoices/show")
-    grover = Grover.new(
-      html_content,
-      format: "A4",
-      margin: {
-        top: "0",
-        right: "0",
-        bottom: "0",
-        left: "0"
-      },
-      scale: 1.1,
-      print_background: true,
-      emulate_media: "print",
-      wait_until: "domcontentloaded",
-      cache: false,
-      page_ranges: "1"
-    )
-    pdf = grover.to_pdf
-    send_data pdf, filename: "invoice.pdf", type: "application/pdf", disposition: "attachment"
-  end
 
   def destroy
     @invoice = Invoice.find(params[:id])

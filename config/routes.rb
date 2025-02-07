@@ -4,11 +4,7 @@ resources :jobs
 resources :works
 resources :projects
 resources :project_works
-resources :invoices do
-  member do
-    get 'preview'
-  end
-end
+resources :invoices
 resources :commits
 
 

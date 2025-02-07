@@ -64,4 +64,5 @@ group :test do
   gem "selenium-webdriver"
 end
 gem 'devise'
-gem 'grover'
+gem "pdfkit"
+gem 'wkhtmltopdf-binary'

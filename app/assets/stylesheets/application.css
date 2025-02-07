@@ -4,3 +4,23 @@ body {
   padding: 0;
   background-color: #f9f9f9;
 }
+
+@media print {
+  /* Hide the download button in the PDF */
+  #pdf_link, .download-button {
+    display: none;
+  }
+
+  /* Additional print-specific styling */
+  body {
+    background-color: #FFF;
+  }
+  
+  /* Adjust layout, margins, etc., as needed */
+  #container {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+}

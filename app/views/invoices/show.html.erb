@@ -1,78 +1,175 @@
-<div class="flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="w-full max-w-4xl h-[1000px] bg-white p-8 shadow-lg rounded-lg space-y-10 overflow-none">
-    <div class="invoice-header">
-      <h1 class="text-3xl font-bold text-gray-900">INVOICE</h1>
-     <div class="m-2"> <%= @project.name %></h1> </div>
+<title>Invoice</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
+.container {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    padding: 30px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #e5e7eb;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.project-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #374151;
+}
+
+/* Customer Details & Invoice Meta */
+.customer-details, .invoice-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.customer-details div, .invoice-meta div {
+    flex: 1;
+}
+
+.customer-details div:first-child,
+.invoice-meta div:first-child {
+    text-align: left;
+}
+
+.customer-details div:last-child,
+.invoice-meta div:last-child {
+    text-align: right;
+}
+
+.label {
+    font-weight: bold;
+    color: #374151;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.table th, .table td {
+    border: 2px solid #d1d5db;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #e5e7eb;
+    font-size: 18px;
+}
+
+/* Total Section */
+.total {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 15px;
+    margin-top: 30px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 13px;
+    background-color: #16a34a;
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #15803d;
+}
+</style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>INVOICE</h1>
+            <div><%= @project.name %></div>
+        </div>
+        <div class="customer-details">
+            <div>
+                <span class="label">From:</span>
+                <p><%= @invoice.name %></p>
+            </div>
+            <div>
+                <span class="label">Bill To:</span>
+                <p><%= @invoice.client %></p>
+            </div>
+        </div>
+        <div class="invoice-meta">
+            <div>
+                <span class="label">Date:</span>
+                <p><%= @invoice.date.strftime("%B %d, %Y") %></p>
+            </div>
+            <div>
+                <span class="label">Due Date:</span>
+                <p><%= @invoice.due_date.strftime("%B %d, %Y") %></p>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity / Hours</th>
+                    <th>Rate</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @invoice.line_items.each do |line_item| %>
+                <tr>
+                    <td><%= simple_format line_item.description %></td>
+                    <td><%= line_item.quantity.to_d.round %></td>
+                    <td><%= line_item.rate.to_d %></td>
+                    <td><%= number_to_currency(line_item.subtotal) %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <div class="total">Total: <%= number_to_currency(@invoice.total.to_s.slice(7..)) %></div>
+        <a href="<%= invoice_path(@invoice, format: :pdf) %>" class="button">Download PDF</a>
     </div>
-
-    <div class="customer-details grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-lm font-medium text-gray-700">From</label>
-        <p class="mt-2 block w-full text-lm text-gray-700"><%= @invoice.name %></p>
-      </div>
-      <div>
-        <label class="block text-lm font-medium text-gray-700">Bill To</label>
-        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.client %></p>
-      </div>
-    </div>
-
-    <div class="invoice-meta grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-lm font-medium text-gray-700">Date</label>
-        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.date.strftime("%B %d, %Y") %></p>
-      </div>
-      <div>
-        <label class="block text-lm font-medium text-gray-700">Due Date</label>
-        <p class="mt-1 block w-full text-lm text-gray-700"><%= @invoice.due_date.strftime("%B %d, %Y") %></p>
-      </div>
-    </div>
-
-    <table class="w-full border-collapse border border-gray-200 rounded-lg shadow-sm">
-      <thead class="bg-gray-300">
-        <tr>
-          <th class="p-2 border border-gray-300">Description</th>
-          <th class="p-2 border border-gray-300">Quantity / Hours</th>
-          <th class="p-2 border border-gray-300">Rate</th>
-          <th class="p-2 border border-gray-300">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        <% @invoice.line_items.each do |line_item| %>
-          <tr>
-            <td class="p-2 border border-gray-300">
-              <p class="text-lm text-gray-700"><%= simple_format line_item.description %></p>
-            </td>
-            <td class="p-2 border border-gray-300 text-center">
-              <p class="text-lm text-gray-700"><%= line_item.quantity.to_d.round%></p>
-            </td>
-            <td class="p-2 border border-gray-300 text-center">
-              <p class="text-lm text-gray-700"><%= line_item.rate.to_d %></p>
-            </td>
-            <td class="p-2 border border-gray-300 text-center">
-              <p class="text-lm text-gray-700"><%=number_to_currency(line_item.subtotal) %></p>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-  <div class="mt-auto">
-    <div class="flex justify-end mt-8">
-      <div class="text-right">
-        <p class="text-xl font-semibold text-gray-700 bg-gray-50 shadow-sm px-6 py-3 rounded-md">
-         Total:  <%= number_to_currency(@invoice.total.to_s.slice(7..)) %>
-        </p>
-      </div>
-    </div>
-  </div>
-  
-<div class="mt-6 text-right flex justify-start p-12" data-controller="hide-buttons">
-  <%= link_to 'Download', preview_invoice_path(@invoice), 
-        class: "px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700",
-        data: { action: "click->hide-buttons#replaceAfterClick", hide_buttons_target: "button" } %>
-</div>
-
-
-  </div>
-  </div>
