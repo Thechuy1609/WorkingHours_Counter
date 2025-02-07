@@ -3,6 +3,10 @@
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "bg-white p-8 rounded-lg shadow-md mt-6" }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
+<div class="mb-4">
+  <%= f.label :username, class: "block text-sm font-medium text-gray-700"  %>
+  <%= f.text_field :username, required: true, class: "w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500" %>
+</div>
 
     <div class="mb-4">
       <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>

@@ -10,7 +10,6 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
-      flash[:success] = "Invoice successfully created"
       redirect_to project_invoice_path(@invoice.project_id, @invoice.id)
     else
       flash[:error] = "Something went wrong", @invoice.errors.full_messages
