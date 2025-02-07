@@ -12,39 +12,40 @@
     </div>
   </div>
 
-  <table class="w-full border-collapse">
-  <thead>
-    <tr class="border-b">
-      <th class="text-left py-2 px-4">Name</th>
-      <th class="text-left py-2 px-4">Client</th>
-      <th class="text-left py-2 px-4">Description</th>
-      <th class="text-left py-2 px-4">Date</th>
-      <th class="text-left py-2 px-4">Actions</th>
-    </tr>
-  </thead>
-<tbody>
-  <% @projects.each do |project| %>
-    <tr class="border-b cursor-pointer hover:bg-gray-100" onclick="window.location='<%= project_path(project) %>'">
-      <td class="py-2 px-4"><%= project.name %></td>
-      <td class="py-2 px-4"><%= project.client %></td>
-      <% if project.description.present? %>
-        <td class="py-2 px-4"><%= project.description %></td>
-      <% else %>
-        <td class="py-2 px-4">-------------</td>
-      <% end %>
-      <td class="py-2 px-4"><%= project.created_at.strftime("%B %d, %Y") %></td>
-      <td class="py-2 px-4">
-        <%= button_to project_path(project), method: :delete, 
-            data: { turbo: "false", confirm: "Delete this project?" }, 
-            class: "flex items-center ml-4 w-8 h-8 rounded-full shadow-sm transition border border-red-300 bg-transparent hover:bg-red-800" do %>
-          <%= image_tag 'boton-eliminar.png', alt: 'Delete', width: '32', height: '32' %>
+  <% if @projects.any? %>
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="border-b">
+          <th class="text-left py-2 px-4">Name</th>
+          <th class="text-left py-2 px-4">Client</th>
+          <th class="text-left py-2 px-4">Description</th>
+          <th class="text-left py-2 px-4">Date</th>
+          <th class="text-left py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr class="border-b cursor-pointer hover:bg-gray-100" onclick="window.location='<%= project_path(project) %>'">
+            <td class="py-2 px-4"><%= project.name %></td>
+            <td class="py-2 px-4"><%= project.client %></td>
+            <td class="py-2 px-4"><%= project.description.presence || '-------------' %></td>
+            <td class="py-2 px-4"><%= project.created_at.strftime("%B %d, %Y") %></td>
+            <td class="py-2 px-4">
+              <%= button_to project_path(project), method: :delete, 
+                  data: { turbo: "false", confirm: "Delete this project?" }, 
+                  class: "flex items-center ml-4 w-8 h-8 rounded-full shadow-sm transition border border-red-300 bg-transparent hover:bg-red-800" do %>
+                <%= image_tag 'boton-eliminar.png', alt: 'Delete', width: '32', height: '32' %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
-      </td>
-    </tr>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="flex justify-center items-center h-64">
+      <p class="text-5xl font-bold text-gray-500">There are no saved projects</p>
+    </div>
   <% end %>
-</tbody>
-
-</table>
 </div>
 
 <div class="flex justify-center mt-6">
