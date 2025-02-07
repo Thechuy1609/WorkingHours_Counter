@@ -7,10 +7,10 @@
   <% @invoices.each do |invoice| %>
     <ul class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:bg-gray-50">
       <li class="flex items-center justify-between">
-        <%= link_to "Invoice ##{invoice.id}", invoice_path(invoice), class: "text-xl font-semibold text-blue-600 hover:text-blue-800" %>
+        <%= link_to "Invoice ##{invoice.id}", project_invoice_path(:project_id, :invoice_id), class: "text-xl font-semibold text-blue-600 hover:text-blue-800" %>
         <span class="text-sm text-gray-500">#<%= invoice.id %></span>
         
-        <%= button_to invoice_path(invoice), method: :delete, data: { confirm: "Are you sure you want to delete this invoice?" }, class: "text-red-600 hover:text-red-800 text-sm font-semibold" do %>
+        <%= button_to project_invoice_path(invoice.project_id, invoice.id), method: :delete, data: { confirm: "Are you sure you want to delete this invoice?" }, class: "text-red-600 hover:text-red-800 text-sm font-semibold" do %>
           Delete
         <% end %>
       </li>
@@ -23,5 +23,5 @@
   </div>
 <% end %>
   <div class="flex justify-center mt-8">
-    <%= link_to "Back", projects_path, class: "bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
+    <%= link_to "Back", project_path(@project.id), class: "bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105" %>
   </div>

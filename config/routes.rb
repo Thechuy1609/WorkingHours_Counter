@@ -2,9 +2,10 @@ Rails.application.routes.draw do
 devise_for :users
 resources :jobs
 resources :works
-resources :projects
+resources :projects do
+  resources :invoices
+end
 resources :project_works
-resources :invoices
 resources :commits
 
 

@@ -170,7 +170,7 @@ body {
         </table>
         <div class="total">Total: <%= number_to_currency(@invoice.total.to_s.slice(7..)) %></div>
 <%= link_to "Download PDF", 
-    invoice_path(@invoice, format: :pdf), 
+    project_invoice_path(@invoice.project_id, @invoice.id, format: :pdf), 
     class: "button", 
     data: { controller: "hide-buttons", 
             action: "click->hide-buttons#replaceAfterClick", 

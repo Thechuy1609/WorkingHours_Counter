@@ -2,17 +2,7 @@ class InvoicesController < ApplicationController
   before_action :set_project
 
   def index
-    if params[:project_id].present?
-      @project = Project.find_by(id: params[:project_id])
-      if @project
-        @invoices = @project.invoices
-      else
-        flash[:error] = "Project not found"
-        redirect_to invoices_path
-      end
-    else
-      @invoices = Invoice.all
-    end
+    @invoices = @project.invoices
   end
 
   def create
@@ -21,10 +11,10 @@ class InvoicesController < ApplicationController
 
     if @invoice.save
       flash[:success] = "Invoice successfully created"
-      redirect_to invoice_path(@invoice)
+      redirect_to project_invoice_path(@invoice.project_id, @invoice.id)
     else
       flash[:error] = "Something went wrong", @invoice.errors.full_messages
-      redirect_to new_invoice_path
+      redirect_to new_project_invoice_path
     end
   end
 
@@ -49,20 +39,24 @@ class InvoicesController < ApplicationController
 
 
   def destroy
-    @invoice = Invoice.find(params[:id])
-    @invoice.destroy
-    redirect_to invoices_path
+    @invoice = @project.invoices.find(params[:id]) # Scoped lookup to avoid issues
+  
+    if @invoice.destroy
+      flash[:success] = "Invoice deleted successfully"
+    else
+      flash[:error] = "Failed to delete invoice"
+    end
+  
+    redirect_to project_invoices_path(@project.id) # Ensure the path is correct
   end
+  
 
   private
 
   def set_project
     if params[:project_id].present?
       @project = Project.find_by(id: params[:project_id])
-      unless @project
-        flash[:error] = "Project not found"
-        redirect_to invoices_path
-      end
+
     end
   end
 

@@ -1,6 +1,6 @@
 <div data-controller="invoice" class="flex flex-col min-h-screen items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
   <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">Generated Invoice</h2>
-  <%= form_with(model: @invoice, url: invoices_path(project_id: @project.id)) do |f| %>
+  <%= form_with(model: @invoice, url: project_invoices_path(project_id: @project.id)) do |f| %>
     <%= f.hidden_field :project_id, value: @project.id %>
     <div class="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg space-y-10">
       <div class="invoice-header">
